@@ -107,24 +107,51 @@
     pip:
       name: jenkins-job-builder
       state: present
+
+  - name: Change Jenkins port
+    lineinfile:
+      path: /etc/default/jenkins
+      regexp: '^HTTP_PORT=8080'
+      line: 'HTTP_PORT=9000'
+    become: true
+
+  - name: Restart Jenkins
+    service:
+      name: jenkins
+      state: restarted
+    become: true
+
+  - name: Delay added
+    wait_for: 
+      port: 9000 
+      delay: 30
       
   - name: Check if Jenkins is running
     service:
       name: jenkins
       state: started
 
-#  - name: Copy private SSH Key for GitHub
-#    copy:
-#      src: ~/.ssh/id_rsa
-#      dest: ~/.ssh/git_rsa
-#      mode: 0400
 
-#  - name: Adding SSH key to the ssh-agent
-#    shell: '{{item}}'
-#    become: true
-#    with_items:
-#      - cd /home/ubuntu/.ssh
-#      - eval "$(ssh-agent -s)" && ssh-add -k /home/ubuntu/.ssh/git_rsa
+  - name: Copy private git SSH Key
+    copy:
+      src: /Ansible/git config/git-key
+      dest: /root/.ssh/git-key
+      mode: 0400
+    become: true
+
+  - name: adding it to the ssh-agent
+    shell: '{{item}}'
+    become: true
+    with_items:
+      - cd /root/.ssh
+      - eval "$(ssh-agent -s)" && ssh-add -k /root/.ssh/git-key
+
+
+  - name: ssh config file copy for git ncsu
+    copy:
+      src: /Ansible/git config/config
+      dest: /root/.ssh/config
+    become: true
 
   - name: Add config file for ssh for github ncsu host
     template:

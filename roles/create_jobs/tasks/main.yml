@@ -25,14 +25,14 @@
     src: "checkbox_jenkins_jobs.yml"
     dest: ~/jobs/{{checkbox_job}}.yml
 
-#- name: create jobs
-#  shell: 'cd  && jenkins-jobs --conf /home/vagrant/jenkins_jobs.ini update /home/vagrant/jobs'
-#  become: yes
+- name: create jobs
+ shell: 'cd  && jenkins-jobs --conf /home/vagrant/jenkins_jobs.ini update /home/vagrant/jobs'
+ become: yes
 
-#- name: Put the script on server for build job
-#  template:
-#    src:  "iTrustjob.yml"
-#    dest: ~/jobs/{{iTrust_job}}.yml
+- name: Put the script on server for build job
+ template:
+   src:  "iTrustjob.yml"
+   dest: ~/jobs/{{iTrust_job}}.yml
 
 - name: read admin pwd | Jenkins
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
