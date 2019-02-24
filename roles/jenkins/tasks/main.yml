@@ -137,7 +137,7 @@
 
   - name: Copy private git SSH Key
     copy:
-      src: /Ansible/git config/git-key
+      src: .ssh/git-key
       dest: /root/.ssh/git-key
       mode: 0400
     become: true
@@ -152,7 +152,7 @@
 
   - name: ssh config file copy for git ncsu
     copy:
-      src: /Ansible/git config/config
+      src: .ssh/config
       dest: /root/.ssh/config
     become: true
 
