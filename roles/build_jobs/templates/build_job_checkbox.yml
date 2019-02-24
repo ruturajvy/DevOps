@@ -4,7 +4,7 @@
   vars:
     checkbox_job: checkboxio
     user_name: jenkins
-    user_password: jenkins
+    user_password: password
 
   tasks:
   - name: check if checkbox git folder exists

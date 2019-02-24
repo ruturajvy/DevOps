@@ -22,12 +22,12 @@
 
 - name: Copy build script to jenkins server
   copy:
-    src: "templates/build_job.yml"
+    src: "templates/build_job_checkbox.yml"
     dest: ~/
   become: false
 
-- name: Copy checkbox deploy playbook to jenkins server
+- name: Copy checkbox build playbook to jenkins server
   copy:
-    src: "templates/deploy_checkbox.yml"
+    src: "templates/checkbox_build.yml"
     dest: ~/
   become: false

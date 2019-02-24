@@ -10,7 +10,7 @@
       jenkins_home: /var/lib/jenkins
       user_name: 'jenkins'
       user_password: 'password'
-      jenkins_url: http://localhost:8080
+      jenkins_url: http://localhost:9000
 
     roles:
       - ansible

@@ -34,23 +34,41 @@
      update_cache: yes
     become: true
   
-  # - name: Wait for a while
-  #   wait_for: 
-  #     port: 9000 
-  #     delay: 20
+  - name: Change Jenkins port
+    replace:
+      path: /etc/default/jenkins
+      regexp: '^HTTP_PORT=8080'
+      replace: 'HTTP_PORT=9000'
+    become: true
 
-      
-  - name: Check if Jenkins is running
+  - name: Restart Jenkins
     service:
       name: jenkins
-      state: started
+      state: restarted
+    become: true
 
-  - name: read admin pwd
+  - name: Read initial admin pwd | jenkins
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
     become: true
 
-  - name: unlock and add admin user
+  - name: Ensure Jenkins is up and running
+    uri:
+      url: "http://localhost:9000"
+      status_code: 200
+      timeout: 5
+      user: admin
+      password: "{{ adminpwd.stdout }}"
+      force_basic_auth: yes
+    register: jenkins_service_status
+    # Keep trying for 5 mins in 5 sec intervals
+    retries: 10
+    delay: 5
+    until: >
+      'status' in jenkins_service_status and
+       jenkins_service_status['status'] == 200
+
+  - name: Unlock and add admin user
     jenkins_script:
      script: |
       import jenkins.model.*
@@ -65,6 +83,7 @@
       instance.save()
      args:
       user_pwd: "{{ user_password }}"
+     url: "http://localhost:9000"
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
@@ -77,6 +96,7 @@
       if (!jenkins.installState.isSetupComplete()) {
         InstallState.INITIAL_SETUP_COMPLETED.initializeState()
       }
+     url: "http://localhost:9000"
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
@@ -98,6 +118,7 @@
     jenkins_plugin:
       name: "{{ item }}"
       state: latest
+      url: "http://localhost:9000"
       url_username: admin
       url_password: "{{ adminpwd.stdout }}"
       validate_certs: False
@@ -122,7 +143,6 @@
     service:
       name: jenkins
       state: started
-
 
   - name: Copy private git SSH Key
     copy:
