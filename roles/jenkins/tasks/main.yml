@@ -46,6 +46,11 @@
       name: jenkins
       state: restarted
     become: true
+  
+  - name: Waiting for the initialAdminPassword file to get created
+    wait_for:
+      path: /var/lib/jenkins/secrets/initialAdminPassword
+    become: true
 
   - name: Read initial admin pwd | jenkins
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
