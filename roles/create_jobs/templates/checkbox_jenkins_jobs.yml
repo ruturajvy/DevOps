@@ -1,10 +1,10 @@
 - job:
-    name: "{{job_name}}"
+    name: "{{checkbox_job}}"
     description: 'automatically generated test'
     project-type: freestyle
     builders:
       - shell: 'sudo git clone https://github.com/chrisparnin/checkbox.io.git'
-      - shell: 'cd /var/lib/jenkins/workspace/{{job_name}}/checkbox.io/server-side/site && sudo npm install'
+      - shell: 'cd /var/lib/jenkins/workspace/{{checkbox_job}}/checkbox.io/server-side/site && sudo npm install'
 
 
 
