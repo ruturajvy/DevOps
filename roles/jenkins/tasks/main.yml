@@ -74,7 +74,8 @@
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
-
+    ignore_errors: yes
+    
   - name: Getting Jenkins CLI Jar
     get_url:
       url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
