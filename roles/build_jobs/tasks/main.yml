@@ -20,9 +20,15 @@
 
 ###
 
-- name: Copy build script to jenkins server
+- name: Copy Checkbox build script to jenkins server
   copy:
     src: "templates/build_job_checkbox.yml"
+    dest: ~/
+  become: false
+
+- name: Copy iTrust build script to jenkins server
+  copy:
+    src: "templates/build_job_itrust.yml"
     dest: ~/
   become: false
 
