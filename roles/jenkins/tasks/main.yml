@@ -33,37 +33,37 @@
      state: present
      update_cache: yes
     become: true
-  - name: Wait for a while
-    wait_for: 
-      port: 9000 
-      delay: 20
+  # - name: Wait for a while
+  #   wait_for: 
+  #     port: 9000 
+  #     delay: 20
 
- 
-  - name: read admin pwd
+  - name: Read admin pwd | jenkins
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
     become: true
 
-  - name: unlock and add admin user
+  - name: Unlock and add admin user | jenkins
     jenkins_script:
      script: |
       import jenkins.model.*
       import hudson.security.*
       def instance = Jenkins.getInstance()
       def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-      hudsonRealm.createAccount('jenkins', '${user_pwd}')
+      hudsonRealm.createAccount( '${user}', '${user_pwd}')
       instance.setSecurityRealm(hudsonRealm)
       def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
       strategy.setAllowAnonymousRead(false)
       instance.setAuthorizationStrategy(strategy)
       instance.save()
      args:
-      user_pwd: "{{ admin_user_pass }}"
+      user: "{{ user_name }}"
+      user_pwd: "{{ user_password }}"
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
 
-  - name: complete setup wizard
+  - name: Complete setup wizard
     jenkins_script:
      script: |
       import static jenkins.model.Jenkins.instance as jenkins
@@ -73,11 +73,6 @@
       }
      user: admin
      password: "{{ adminpwd.stdout }}"
-    become: true
-  - name: Removing Groovy Script so it doesn't create furthermore user
-    file:
-      path: "{{jenkins_home}}/init.groovy.d/security.groovy"
-      state: absent
     become: true
 
   - name: Getting Jenkins CLI Jar
