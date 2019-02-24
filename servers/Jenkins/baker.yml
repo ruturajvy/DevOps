@@ -1,4 +1,4 @@
-name: cm-server
+name: jenkins
 vm:
   ip: 192.168.77.100
 tools:

@@ -33,7 +33,10 @@
      state: present
      update_cache: yes
     become: true
-
+  - name: Wait for a while
+    wait_for: 
+      port: 8080 
+      delay: 20
   - name: Read admin pwd | jenkins
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
@@ -153,10 +156,10 @@
       dest: /root/.ssh/config
     become: true
 
-  - name: Add config file for ssh for github ncsu host
-    template:
-      src: config
-      dest: ~/.ssh/config
+  # - name: Add config file for ssh for github ncsu host
+  #   template:
+  #     src: config
+  #     dest: ~/.ssh/config
 
   - name: Copy jenkins_jobs.ini file to jenkins server
     template:
