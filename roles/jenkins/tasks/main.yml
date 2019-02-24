@@ -50,7 +50,7 @@
       import hudson.security.*
       def instance = Jenkins.getInstance()
       def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-      hudsonRealm.createAccount( '${user}', '${user_pwd}')
+      hudsonRealm.createAccount( 'jenkins', '${user_pwd}')
       instance.setSecurityRealm(hudsonRealm)
       def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
       strategy.setAllowAnonymousRead(false)
