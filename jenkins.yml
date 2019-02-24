@@ -2,9 +2,9 @@
   - hosts: all
     sudo: yes
   
-    vars_prompt:
-      - name: "mysql_password"
-        prompt: "enter mysql root pass" 
+#    vars_prompt:
+#      - name: "mysql_password"
+#        prompt: "enter mysql root pass" 
 
     vars:
       jenkins_home: /var/lib/jenkins
