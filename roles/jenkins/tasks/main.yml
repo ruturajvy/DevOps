@@ -81,11 +81,11 @@
      password: "{{ adminpwd.stdout }}"
     become: true
     
-  - name: Removing Groovy Script so it doesn't create furthermore user
-    file:
-      path: "{{jenkins_home}}/init.groovy.d/security.groovy"
-      state: absent
-    become: true
+#  - name: Removing Groovy Script so it doesn't create furthermore user
+#    file:
+#      path: "{{jenkins_home}}/init.groovy.d/security.groovy"
+#      state: absent
+#    become: true
 
   - name: Getting Jenkins CLI Jar
     get_url:
@@ -93,8 +93,6 @@
       dest: "/home/ubuntu/"
       mode: 0755
     become: true
-
-
 
   - name: Install Jenkin Plugins
     jenkins_plugin:
@@ -115,12 +113,10 @@
       - ws-cleanup
     become: true
     
-
   - name: Install jenkins job builder
     pip:
       name: jenkins-job-builder
       state: present
-
 
   - name: Check if Jenkins is running
     service:
