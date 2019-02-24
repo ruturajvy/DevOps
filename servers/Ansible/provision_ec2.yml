@@ -11,7 +11,7 @@
        become: false
      - name: Change private key permissions
        file: 
-         path: /home/ruturaj/Project-DevOps/DevOps-Key.pem
+         path: /Ansible/DevOps-Key.pem
          mode: 0600
          
        
