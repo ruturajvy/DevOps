@@ -1,0 +1,39 @@
+---
+- name: enabling access to mvn without password 
+  lineinfile:
+    path: /etc/sudoers
+    line: "jenkins ALL=(ALL) NOPASSWD: ALL"
+  become: true
+
+- name: Setup mongoDb for checkboxio
+  copy:
+    src: "templates/setup_mongodb.yml"
+    dest: /var/lib/jenkins/setup_mongodb.yml
+    owner: jenkins
+    group: jenkins
+    mode: 0666
+  become: yes
+
+#- name: Copy checkbox job script
+#  template:
+#    src: "checkbox_jenkins_jobs.yml"
+#    dest: /home/vagrant/jobs/checkbox_jenkins_jobs.yml
+#  become: yes
+
+- name: Copy Checkbox.io Deployment jenkins job script
+  template:
+    src: "checkbox_jenkins_jobs.yml"
+    dest: ~/jobs/{{checkbox_job}}.yml
+
+#- name: create jobs
+#  shell: 'cd  && jenkins-jobs --conf /home/vagrant/jenkins_jobs.ini update /home/vagrant/jobs'
+#  become: yes
+
+#- name: Put the script on server for build job
+#  template:
+#    src:  "iTrustjob.yml"
+#    dest: ~/jobs/{{iTrust_job}}.yml
+
+- name: create jobs
+  shell: '~/.local/bin/jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
+

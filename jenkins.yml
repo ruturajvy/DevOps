@@ -1,0 +1,18 @@
+---
+  - hosts: all
+    sudo: yes
+  
+    vars_prompt:
+      - name: "mysql_password"
+        prompt: "enter mysql root pass" 
+
+    vars:
+      jenkins_home: /var/lib/jenkins
+      admin_user_pass: 'password'
+      jenkins_url: http://localhost:8080
+
+    roles:
+      - mysql
+      - java
+      - jenkins
+      - node

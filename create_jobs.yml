@@ -1,0 +1,31 @@
+---
+
+#- hosts: localhost
+#  
+#  vars:
+#      GIT_PERSONAL_ACCESS_TOKEN: !vault |
+#          $ANSIBLE_VAULT;1.1;AES256
+#          65333732643531376666356565313563313263366331343732373933356666623166656266663830
+#          3237653036303632313632383534363034363530363135630a623236636337343838323463303937
+#          33393439346535393564353231336238663637396435636239356431353935636263313964323231
+#          3639386431363064360a616263393933656662366262636432623939386630663266323135373161
+#          65666136613537613861366438613137373338313136356630326237373139626466376433633033
+#          3762346562623532666234333666393364653431306334386666
+    
+#  tasks: 
+#    - github_hooks:
+#          action: create
+#          hookurl: "http://192.168.77.100:8080/github-webhook/"
+#          user: alagava
+#          oauthkey: "{{GIT_PERSONAL_ACCESS_TOKEN}}"
+#          repo: https://api.github.com/repos/alagava/checkbox.io
+
+- hosts: jenkins
+
+  vars:
+    jenkins_home: /var/lib/jenkins
+    admin_user_pass: 'password'
+    admin_username: 'jenkins'
+
+  roles:
+    - create_jobs

@@ -1,0 +1,9 @@
+- hosts: jenkins
+
+  vars:
+    jenkins_home: /var/lib/jenkins
+    admin_user_pass: 'password'
+    admin_username: 'jenkins'
+
+  roles:
+    - build_jobs
