@@ -23,20 +23,36 @@
 - name: Copy Checkbox.io Deployment jenkins job script
   template:
     src: "checkbox_jenkins_jobs.yml"
-    dest: ~/jobs/{{checkbox_job}}.yml
+    dest: /home/ubuntu/jobs/{{checkbox_job}}.yml
+  become: yes
 
-- name: create jobs
- shell: 'cd  && jenkins-jobs --conf /home/vagrant/jenkins_jobs.ini update /home/vagrant/jobs'
- become: yes
 
 - name: Put the script on server for build job
- template:
-   src:  "iTrustjob.yml"
-   dest: ~/jobs/{{iTrust_job}}.yml
-
+  template:
+   src:  "iTrust_jenkins_jobs.yml"
+   dest: /home/ubuntu/jobs/{{iTrust_job}}.yml
+  become: yes
 - name: read admin pwd | Jenkins
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
   register: adminpwd
+  become: true
+
+- name: check if itrust git folder exists
+  stat:
+    path: "/var/lib/jenkins/workspace/{{ iTrust_job }}/iTrust2-v4/"
+  register: gitexists
+
+- name: delete if the itrust directory exists
+  file:
+    state: absent
+    path: "/var/lib/jenkins/workspace/{{ iTrust_job }}/iTrust2-v4"
+  when: gitexists.stat.exists
+  become: true
+
+- name: removing password authentication for maven
+  lineinfile:
+    path: /etc/sudoers
+    line: "jenkins ALL=(ALL) NOPASSWD: ALL"
   become: true
 
 - jenkins_script:
@@ -49,20 +65,39 @@
    user: admin
    password: "{{ adminpwd.stdout }}"
 
-- name: Create job using job builder
-  shell: "jenkins-jobs --conf {{ home_dir }}/jenkins_jobs.ini update {{ home_dir }}/jobs/"
+- name: Change Jenkins port
+  replace:
+    path: /etc/default/jenkins
+    regexp: '^HTTP_PORT=8080'
+    replace: 'HTTP_PORT=9000'
+  become: true
 
-- jenkins_script:
-   script: |
-    import jenkins.model.*
-    import hudson.security.*
-    def instance = Jenkins.getInstance()
-    def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-    instance.setSecurityRealm(hudsonRealm)
-    def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
-    strategy.setAllowAnonymousRead(false)
-    instance.setAuthorizationStrategy(strategy)
-    instance.save()
-   user: admin
-   password: "{{ adminpwd.stdout }}"
+- name: Restart Jenkins
+  service:
+    name: jenkins
+    state: restarted
+  become: true
 
+- name: Delay added
+  wait_for: 
+    port: 9000 
+    delay: 10
+
+- name: create jobs
+  shell: 'jenkins-jobs --conf /home/ubuntu/jenkins_jobs.ini update /home/ubuntu/jobs'
+
+
+
+# - jenkins_script:
+#    script: |
+#     import jenkins.model.*
+#     import hudson.security.*
+#     def sinstance = Jenkins.getInstance()
+#     def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+#     instance.setSecurityRealm(hudsonRealm)
+#     def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+#     strategy.setAllowAnonymousRead(false)
+#     instance.setAuthorizationStrategy(strategy)
+#     instance.save()
+#    user: admin
+#    password: "{{ adminpwd.stdout }}"
