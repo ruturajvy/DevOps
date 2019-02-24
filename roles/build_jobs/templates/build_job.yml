@@ -23,5 +23,5 @@
     shell: "{{ item }}"
     become: true
     with_items:
-      - 'java -jar jenkins-cli.jar -s http://localhost:8080/ -auth {{ user_name }}:{{ user_password }} build {{ checkbox_job }}'
+      - 'java -jar jenkins-cli.jar -s http://localhost:9000/ -auth {{ user_name }}:{{ user_password }} build {{ checkbox_job }}'
     become: true

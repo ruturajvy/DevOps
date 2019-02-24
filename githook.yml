@@ -14,7 +14,7 @@
   tasks:
     - github_hooks:
           action: create
-          hookurl: "http://192.168.77.100:8080/github-webhook/"
+          hookurl: "http://192.168.77.100:9000/github-webhook/"
           user: alagava
           #oauthkey: "{{GIT_PERSONAL_ACCESS_TOKEN}}"
           oauthkey: a8c94489e6071cf2c6b08e79e127b39942871e71
