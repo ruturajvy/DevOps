@@ -9,7 +9,7 @@
     vars:
       jenkins_home: /var/lib/jenkins
       user_name: 'jenkins'
-      user_password: 'jenkins'
+      user_password: 'password'
       jenkins_url: http://localhost:8080
 
     roles:
