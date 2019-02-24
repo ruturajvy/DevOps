@@ -10,7 +10,7 @@
 
   - name: Install required packages
     apt: 
-      pkg: ['maven','git','vim','html-xml-utils','python3-pip','python-pip','python-dev','python-lxml','python3-setuptools','python-setuptools'] 
+      pkg: ['maven','nginx','git','vim','html-xml-utils','python3-pip','python-pip','python-dev','python-lxml','python3-setuptools','python-setuptools'] 
       state: present 
       update_cache: true
     become: true
