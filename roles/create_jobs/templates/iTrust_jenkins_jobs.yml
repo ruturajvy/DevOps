@@ -2,7 +2,6 @@
     name: "{{iTrust_job}}"
     description: 'Build test automation'
     project-type: freestyle
-      - github:
     builders:
       - shell: 'sudo git clone git@github.ncsu.edu:sbajaj/iTrust2-v4.git'
       - shell: 'sudo cp /var/lib/jenkins/workspace/{{iTrust_job}}/iTrust2-v4/iTrust2/src/main/java/db.properties.template /var/lib/jenkins/workspace/{{iTrust_job}}/iTrust2-v4/iTrust2/src/main/java/db.properties'
