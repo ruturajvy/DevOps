@@ -76,11 +76,16 @@
      password: "{{ adminpwd.stdout }}"
     become: true
     ignore_errors: yes
+  - name: Removing Groovy Script so it doesn't create furthermore user
+    file:
+      path: "{{jenkins_home}}/init.groovy.d/security.groovy"
+      state: absent
+    become: true
 
   - name: Getting Jenkins CLI Jar
     get_url:
       url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
-      dest: "/home/ubuntu/"
+      dest: "~/"
       mode: 0755
   #  become: true
 
