@@ -38,7 +38,7 @@
   #     port: 9000 
   #     delay: 20
 
-  - name: Read admin pwd | jenkins
+  - name: read admin pwd
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
     become: true
@@ -61,6 +61,7 @@
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
+    ignore_errors: yes
 
   - name: Complete setup wizard
     jenkins_script:
