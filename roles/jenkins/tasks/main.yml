@@ -43,21 +43,20 @@
     register: adminpwd
     become: true
 
-  - name: Unlock and add admin user | jenkins
+  - name: unlock and add admin user
     jenkins_script:
      script: |
       import jenkins.model.*
       import hudson.security.*
       def instance = Jenkins.getInstance()
       def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-      hudsonRealm.createAccount( 'jenkins', '${user_pwd}')
+      hudsonRealm.createAccount('jenkins', '${user_pwd}')
       instance.setSecurityRealm(hudsonRealm)
       def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
       strategy.setAllowAnonymousRead(false)
       instance.setAuthorizationStrategy(strategy)
       instance.save()
      args:
-      user: "{{ user_name }}"
       user_pwd: "{{ user_password }}"
      user: admin
      password: "{{ adminpwd.stdout }}"
