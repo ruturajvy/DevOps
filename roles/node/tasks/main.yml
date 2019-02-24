@@ -1,6 +1,6 @@
 ---
-- name: Add repository for node 9
-  shell: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+- name: Add repository for node 11
+  shell: curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
   become: yes
 
 - name: Install latest package
