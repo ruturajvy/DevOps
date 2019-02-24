@@ -8,11 +8,13 @@
 
     vars:
       jenkins_home: /var/lib/jenkins
-      admin_user_pass: 'password'
+      user_name: 'jenkins'
+      user_password: 'jenkins'
       jenkins_url: http://localhost:8080
 
     roles:
+      - ansible
       - mysql
       - java
+      - node 
       - jenkins
-      - node

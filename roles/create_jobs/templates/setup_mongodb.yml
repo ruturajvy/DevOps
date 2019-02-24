@@ -20,12 +20,8 @@
      
      - name: Install latest package
        become: yes
-       with_items:
-         - mongodb
-         - python-pip
-         - python3-setuptools
        apt:
-         name: '{{item}}'
+         name: ['mongodb','python-pip','python3-setuptools']
          state: latest
          update_cache: yes
          force: yes

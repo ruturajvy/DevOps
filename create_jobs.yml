@@ -24,8 +24,8 @@
 
   vars:
     jenkins_home: /var/lib/jenkins
-    admin_user_pass: 'password'
-    admin_username: 'jenkins'
+    user_password: 'jenkins'
+    user_name: 'jenkins'
 
   roles:
     - create_jobs

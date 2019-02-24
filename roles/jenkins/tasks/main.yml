@@ -1,7 +1,7 @@
 ---
  # vars_files:
  #  - credentials.yml
-  - name: install jre8
+  - name: Install jre8
     apt:
      name:  openjdk-8-jre
      state: present
@@ -9,85 +9,57 @@
     become: true
 
   - name: Install required packages
-    apt: pkg="{{item}}" state=present update_cache=true
-
-    with_items: 
-      - maven
-      - git
-      - npm
-      - python-dev
-      - python-pip
-      - python3-pip
-      - python-setuptools
-      - python-lxml
-      - vim
-      - html-xml-utils
-      - python3-setuptools
+    apt: 
+      pkg: ['maven','git','vim','html-xml-utils','python3-pip','python-pip','python-dev','python-lxml','python3-setuptools','python-setuptools'] 
+      state: present 
+      update_cache: true
     become: true
 
-  - name: add jenkins repo key
+  - name: Add jenkins repo key
     apt_key:
      url: https://pkg.jenkins.io/debian/jenkins.io.key
      state: present
     become: true
 
-  - name: add jenkins repo list file into sources.list.d
+  - name: Add jenkins repo list file into sources.list.d
     apt_repository:
      repo: deb http://pkg.jenkins.io/debian-stable binary/
      state: present
     become: true
 
-  - name: install jenkins
+  - name: Install jenkins
     apt:
      name: jenkins
      state: present
      update_cache: yes
     become: true
 
-  - name: install git
-    apt:
-     name: git
-     state: present
-    become: true
-
-  # - name: Create initialization scripts directory
-  #   file: path={{ jenkins_home }}/init.groovy.d
-  #         state=directory
-  #         owner=jenkins
-  #         group=jenkins
-  #         mode=0775
-  #   become: true
-
-  # - name: Add initialization script to setup basic security
-  #   template: src=security.groovy.j2
-  #             dest={{ jenkins_home }}/init.groovy.d/security.groovy
-  #   become: true
-
-  - name: read admin pwd
+  - name: Read admin pwd | jenkins
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
     become: true
 
-  - name: unlock and add admin user
+  - name: Unlock and add admin user | jenkins
     jenkins_script:
      script: |
       import jenkins.model.*
       import hudson.security.*
       def instance = Jenkins.getInstance()
       def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-      hudsonRealm.createAccount('jenkins', '${user_pwd}')
+      hudsonRealm.createAccount( '${user}', '${user_pwd}')
       instance.setSecurityRealm(hudsonRealm)
       def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
       strategy.setAllowAnonymousRead(false)
       instance.setAuthorizationStrategy(strategy)
       instance.save()
      args:
-      user_pwd: "{{ admin_user_pass }}"
+      user: "{{ user_name }}"
+      user_pwd: "{{ user_password }}"
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
 
-  - name: complete setup wizard
+  - name: Complete setup wizard
     jenkins_script:
      script: |
       import static jenkins.model.Jenkins.instance as jenkins
@@ -102,7 +74,7 @@
   - name: Getting Jenkins CLI Jar
     get_url:
       url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
-      dest: "/home/vagrant/"
+      dest: "/home/ubuntu/"
       mode: 0755
   #  become: true
 
@@ -125,14 +97,13 @@
       - ws-cleanup
     become: true
     
-
   - name: Restart Jenkins
     service:
       name: jenkins
       state: restarted
     become: true
 
-  - name: install jenkins job builder
+  - name: Install jenkins job builder
     pip:
       name: jenkins-job-builder
       state: present
@@ -142,18 +113,18 @@
       name: jenkins
       state: started
 
-  - name: Copy private SSH Key for GitHub
-    copy:
-      src: ~/.ssh/id_rsa
-      dest: ~/.ssh/git_rsa
-      mode: 0400
+#  - name: Copy private SSH Key for GitHub
+#    copy:
+#      src: ~/.ssh/id_rsa
+#      dest: ~/.ssh/git_rsa
+#      mode: 0400
 
-  - name: adding it to the ssh-agent
-    shell: '{{item}}'
-    become: true
-    with_items:
-      - cd /home/vagrant/.ssh
-      - eval "$(ssh-agent -s)" && ssh-add -k /home/vagrant/.ssh/git_rsa
+#  - name: Adding SSH key to the ssh-agent
+#    shell: '{{item}}'
+#    become: true
+#    with_items:
+#      - cd /home/ubuntu/.ssh
+#      - eval "$(ssh-agent -s)" && ssh-add -k /home/ubuntu/.ssh/git_rsa
 
   - name: Add config file for ssh for github ncsu host
     template:
@@ -164,8 +135,10 @@
     template:
      src: jenkins_jobs.ini
      dest: ~/jenkins_jobs.ini
+    become: false 
 
-  - name: create a job folder
+  - name: Create a job folder
     file:
       path: "~/jobs"
       state: directory
+    become: false

@@ -1,18 +1,33 @@
-- name: check if checkbox git folder exists
-  stat:
-    path: "/var/lib/jenkins/workspace/{{checkbox_job}}/checkbox.io/"
-  register: itrust_git_file
+###
+#- name: check if checkbox git folder exists
+#  stat:
+#    path: "/var/lib/jenkins/workspace/{{checkbox_job}}/checkbox.io/"
+#  register: checkbox_git_file
 
-- name: delete if the checkbox git directory exists
-  file:
-    state: absent
-    path: "/var/lib/jenkins/workspace/{{checkbox_job}}/checkbox.io/"
-  when: itrust_git_file.stat.exists
-  become: true
+#- name: delete if the checkbox git directory exists
+#  file:
+#    state: absent
+#    path: "/var/lib/jenkins/workspace/{{checkbox_job}}/checkbox.io/"
+#  when: checkbox_git_file.stat.exists
+#  become: true
 
-- name: build checkboxio job
-  shell: '{{item}}'
-  become: true
-  with_items:
-    - 'java -jar jenkins-cli.jar -s http://localhost:8080/ -auth {{admin_username}}:{{ admin_user_pass }} build {{ checkbox_job }}'
-    become: true
+#- name: build checkboxio job
+#  shell: '{{item}}'
+#  become: true
+#  with_items:
+#    - 'java -jar jenkins-cli.jar -s http://localhost:8080/ -auth {{admin_username}}:{{ admin_user_pass }} build {{ checkbox_job }}'
+#    become: true
+
+###
+
+- name: Copy build script to jenkins server
+  copy:
+    src: "templates/build_job.yml"
+    dest: ~/
+  become: false
+
+- name: Copy checkbox deploy playbook to jenkins server
+  copy:
+    src: "templates/deploy_checkbox.yml"
+    dest: ~/
+  become: false

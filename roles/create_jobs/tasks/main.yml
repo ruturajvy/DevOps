@@ -1,5 +1,5 @@
 ---
-- name: enabling access to mvn without password 
+- name: Enable sudo access to jenkins user 
   lineinfile:
     path: /etc/sudoers
     line: "jenkins ALL=(ALL) NOPASSWD: ALL"
@@ -34,6 +34,35 @@
 #    src:  "iTrustjob.yml"
 #    dest: ~/jobs/{{iTrust_job}}.yml
 
-- name: create jobs
-  shell: '~/.local/bin/jenkins-jobs --conf ~/jenkins_jobs.ini update ~/jobs'
+- name: read admin pwd | Jenkins
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: adminpwd
+  become: true
+
+- jenkins_script:
+   script: |
+    import jenkins.model.*
+    import hudson.security.*
+    def instance = Jenkins.getInstance()
+    instance.disableSecurity()
+    instance.save()
+   user: admin
+   password: "{{ adminpwd.stdout }}"
+
+- name: Create job using job builder
+  shell: "jenkins-jobs --conf {{ home_dir }}/jenkins_jobs.ini update {{ home_dir }}/jobs/"
+
+- jenkins_script:
+   script: |
+    import jenkins.model.*
+    import hudson.security.*
+    def instance = Jenkins.getInstance()
+    def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+    instance.setSecurityRealm(hudsonRealm)
+    def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+    strategy.setAllowAnonymousRead(false)
+    instance.setAuthorizationStrategy(strategy)
+    instance.save()
+   user: admin
+   password: "{{ adminpwd.stdout }}"
 
