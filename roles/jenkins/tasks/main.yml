@@ -10,7 +10,7 @@
 
   - name: Install required packages
     apt: 
-      pkg: ['maven','git','nginx','vim','html-xml-utils','python3-pip','python-pip','python-dev','python-lxml','python3-setuptools','python-setuptools'] 
+      pkg: ['maven','git','vim','html-xml-utils','python3-pip','python-pip','python-dev','python-lxml','python3-setuptools','python-setuptools'] 
       state: present 
       update_cache: true
     become: true
@@ -38,20 +38,13 @@
   #   wait_for: 
   #     port: 9000 
   #     delay: 20
-  - name: Restarting Jenkins
-    service:
-      name: jenkins
-      state: restarted
-    become: true
 
-  - name: Wait while re-starting Jenkins
-    wait_for: 
-      port: 9000 
-      delay: 20
+      
   - name: Check if Jenkins is running
     service:
       name: jenkins
       state: started
+
   - name: read admin pwd
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
@@ -101,6 +94,8 @@
       mode: 0755
     become: true
 
+
+
   - name: Install Jenkin Plugins
     jenkins_plugin:
       name: "{{ item }}"
@@ -120,35 +115,13 @@
       - ws-cleanup
     become: true
     
-  - name: Restart Jenkins
-    service:
-      name: jenkins
-      state: restarted
-    become: true
 
   - name: Install jenkins job builder
     pip:
       name: jenkins-job-builder
       state: present
 
-  - name: Change Jenkins port
-    lineinfile:
-      path: /etc/default/jenkins
-      regexp: '^HTTP_PORT=8080'
-      line: 'HTTP_PORT=9000'
-    become: true
 
-  - name: Restart Jenkins
-    service:
-      name: jenkins
-      state: restarted
-    become: true
-
-  - name: Delay added
-    wait_for: 
-      port: 9000 
-      delay: 30
-      
   - name: Check if Jenkins is running
     service:
       name: jenkins
@@ -183,12 +156,12 @@
 
   - name: Copy jenkins_jobs.ini file to jenkins server
     template:
-     src: jenkins_jobs.ini
-     dest: ~/jenkins_jobs.ini
-    become: false 
+     src: /home/vagrant/Project-DevOps/roles/jenkins/templates/jenkins_jobs.ini
+     dest: /home/ubuntu/jenkins_jobs.ini
+    become: true 
 
   - name: Create a job folder
     file:
-      path: "~/jobs"
+      path: "/home/ubuntu/jobs"
       state: directory
-    become: false
+    become: true
