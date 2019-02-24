@@ -34,11 +34,10 @@
      update_cache: yes
     become: true
   
-  - name: Wait for a while
-    wait_for: 
-      port: 9000 
-      delay: 20
-
+  # - name: Wait for a while
+  #   wait_for: 
+  #     port: 9000 
+  #     delay: 20
   - name: read admin pwd
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
@@ -62,9 +61,8 @@
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
-    ignore_errors: yes
 
-  - name: Complete setup wizard
+  - name: complete setup wizard
     jenkins_script:
      script: |
       import static jenkins.model.Jenkins.instance as jenkins
@@ -75,7 +73,7 @@
      user: admin
      password: "{{ adminpwd.stdout }}"
     become: true
-    ignore_errors: yes
+    
   - name: Removing Groovy Script so it doesn't create furthermore user
     file:
       path: "{{jenkins_home}}/init.groovy.d/security.groovy"
@@ -85,9 +83,9 @@
   - name: Getting Jenkins CLI Jar
     get_url:
       url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
-      dest: "/home/vagrant/"
+      dest: "/home/ubuntu/"
       mode: 0755
-  #  become: true
+    become: true
 
   - name: Install Jenkin Plugins
     jenkins_plugin:
