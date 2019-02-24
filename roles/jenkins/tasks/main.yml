@@ -38,6 +38,20 @@
   #   wait_for: 
   #     port: 9000 
   #     delay: 20
+  - name: Restarting Jenkins
+    service:
+      name: jenkins
+      state: restarted
+    become: true
+
+  - name: Wait while re-starting Jenkins
+    wait_for: 
+      port: 9000 
+      delay: 20
+  - name: Check if Jenkins is running
+    service:
+      name: jenkins
+      state: started
   - name: read admin pwd
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
