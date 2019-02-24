@@ -33,10 +33,11 @@
      state: present
      update_cache: yes
     become: true
-  # - name: Wait for a while
-  #   wait_for: 
-  #     port: 9000 
-  #     delay: 20
+  
+  - name: Wait for a while
+    wait_for: 
+      port: 9000 
+      delay: 20
 
   - name: read admin pwd
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
@@ -75,7 +76,7 @@
      password: "{{ adminpwd.stdout }}"
     become: true
     ignore_errors: yes
-    
+
   - name: Getting Jenkins CLI Jar
     get_url:
       url: "{{jenkins_url}}/jnlpJars/jenkins-cli.jar"
@@ -139,7 +140,7 @@
 
   - name: Copy private git SSH Key
     copy:
-      src: .ssh/git-key
+      src: ~/.ssh/git-key
       dest: /root/.ssh/git-key
       mode: 0400
     become: true
@@ -154,7 +155,7 @@
 
   - name: ssh config file copy for git ncsu
     copy:
-      src: .ssh/config
+      src: ~/.ssh/config
       dest: /root/.ssh/config
     become: true
 
