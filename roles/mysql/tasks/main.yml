@@ -19,6 +19,21 @@
     - mysql-server
     - python3-pymysql
 
+- name: insert skip grant tables in my.cnf
+  lineinfile: 
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    insertafter: 'skip-external-locking'
+    line: 'skip-grant-tables'
+  become: true
+
+- name: restarting mysql
+  service:
+    name: mysql
+    enabled: yes
+    state: restarted
+  become: yes
+
+
 - name: Start mysql service	
   become: yes
   service:
