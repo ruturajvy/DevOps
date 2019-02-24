@@ -35,8 +35,9 @@
     become: true
   - name: Wait for a while
     wait_for: 
-      port: 8080 
+      port: 9000 
       delay: 20
+
   - name: Read admin pwd | jenkins
     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: adminpwd
