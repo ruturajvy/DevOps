@@ -5,13 +5,10 @@
 - An "enterprise" Java system iTrust
  
  The provisioning and configuring of the jenkins server is done on a remote VM using ansible. The build jobs for both applications are setup automatically on jenkins using the jenkins-job-builder and the build jobs are executed using git hooks that are triggered whenever a push is made to their respective repositories. A simple test script is also run in the end after each build to verify whether the proper functionality of the applications remian intact.
- 
- ### Instructions
- 
- #### Step 1: Provisioning a remote VM to run the Jenkins build server and to host checkbox and iTrust2 applications.
- 
+   
+ ### Getting Started
  **pre-requisites**: AWS account
- 
+
 - Use `git clone https://github.ncsu.edu/alagava/Project-DevOps.git` to clone our project repository.
  
 - Go to the proper directory using `cd Project-DevOps/ansible-srv` and run `baker bake` to create the ansible controller VM (ansible-srv).
@@ -19,8 +16,8 @@
  ```
  baker ssh
  ```
-
- Make a AWS configuration file to store your AWS credentials
+And do the following:
+Make a AWS configuration file to store your AWS credentials
  #### AWS credential configuration 
  You need to set up your AWS security credentials before you are able
  to connect to AWS. You can do this by creating a file named "credentials" at ~/.aws/ 
@@ -35,6 +32,19 @@
     [default]
     region=<your default region>
     output=<your desired output format>
+#### Generate SSH key pair to enable GitHub passwordless authentication 
+Generate a SSH key pair with the following command
+```
+ssh-keygen -t rsa -b 4096 -C "GitHub" -f ~/.ssh/git-key
+```
+
+
+### Instructions
+#### Step 1: Provisioning a remote VM to run the Jenkins build server and to host checkbox and iTrust2 applications.
+
+
+ 
+
 
 - Run the `provision_ec2.yml` to create an AWS instance to be run as the remote Jenkins build server. This script will also setup the private key file with restricted permissions and populate the inventory file. This inventory file contains the public IP address of the Jenkins build server and path to the private key file. 
 
