@@ -76,21 +76,22 @@ ansible-playbook /ansible-srv/build_jobs.yml -i /ansible-srv/inventory
 
 #### Step 4: Setup a git hook to trigger a jenkins build by setting a post receive hook
 
-- On the Jenkins server, run the following commands to set up post-receive hooks for checkbox and itrust2
+
+- On the Jenkins server, run the following commands to set up post-receive hooks on a localfor checkbox and itrust2
 
 For Checkbox:
 ```bash
 mkdir -p latest_checkbox/production.git/
 git init --bare latest_checkbox/production.git/
-echo "ansible-playbook build_job_checkbox.yml" > latest_checkbox/production.git/hooks/post-receive
+echo "ansible-playbook ~/build_job_checkbox.yml" > latest_checkbox/production.git/hooks/post-receive
 chmod 755 latest_checkbox/production.git/hooks/post-receive
 ```
 For iTrust2:
 ```bash
 mkdir -p latest_itrust/production.git/
 git init --bare latest_itrust/production.git/
-echo "ansible-playbook build_job_checkbox.yml" > latest_checkbox/production.git/hooks/post-receive
-chmod 755 latest_checkbox/production.git/hooks/post-receive
+echo "ansible-playbook ~/build_job_itrust.yml" > latest_itrust/production.git/hooks/post-receive
+chmod 755 latest_itrust/production.git/hooks/post-receive
 ```
 
 
