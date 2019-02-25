@@ -17,7 +17,7 @@
  baker ssh
  ```
 And do the following:
-Make a AWS configuration file to store your AWS credentials
+
  #### AWS credential configuration 
  You need to set up your AWS security credentials before you are able
  to connect to AWS. You can do this by creating a file named "credentials" at ~/.aws/ 
