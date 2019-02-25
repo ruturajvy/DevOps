@@ -37,7 +37,7 @@ Generate a SSH key pair with the following command
 ```
 ssh-keygen -t rsa -b 4096 -C "GitHub" -f ~/.ssh/git-key
 ```
-
+Copy the contents of the public key file `~/.ssh/git-key.pub` and add it to your NCSU github account as done [here](https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account).
 
 ### Instructions
 #### Step 1: Provisioning a remote VM to run the Jenkins build server and to host checkbox and iTrust2 applications.
