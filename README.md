@@ -7,6 +7,9 @@
  The provisioning and configuring of the jenkins server is done on a remote VM using ansible. The build jobs for both applications are setup automatically on jenkins using the jenkins-job-builder and the build jobs are executed using git hooks that are triggered whenever a push is made to their respective repositories. A simple test script is also run in the end after each build to verify whether the proper functionality of the applications remian intact.
  
  ### Instructions
+ 
+ #### Step 1: Provisioning a remote VM to run the Jenkins build server and to host checkbox and iTrust2 applications.
+ 
  **pre-requisites**: AWS account
  
 - Use `git clone https://github.ncsu.edu/alagava/Project-DevOps.git` to clone our project repository.
@@ -38,10 +41,14 @@
 ```bash
 ansible-playbook /ansible-srv/provision_ec2.yml -i 'localhost'
 ```
+#### Step 2: Setup Jenkins on the remote VM
 - Run the `jenkins_init.yml` playbook to install Jenkins on the remote VM
 ```bash
 ansible-playbook /ansible-srv/jenkins_init.yml -i /ansible-srv/inventory
 ```
+
+#### Step 3: Create jobs for building checkbox and itrust2 using jenkins job builder
+
 - Run the `create_jobs.yml` playbook to create jobs for build checkbox.io and itrust2 using jenkins-job-builder and copy them to the build server.
 ```bash
 ansible-playbook /ansible-srv/create_jobs.yml -i /ansible-srv/inventory
@@ -49,14 +56,31 @@ ansible-playbook /ansible-srv/create_jobs.yml -i /ansible-srv/inventory
 - For the first time build the checkbox.io and itrust2 applications by running the `build_checkbox.yml` and `build_itrust.yml` playbooks respectively
 
 ```bash
-ansible-playbook /ansible-srv/build_checkbox.yml -i /ansible-srv/inventory
+ansible-playbook /ansible-srv/build_jobs.yml -i /ansible-srv/inventory
 ```
+
+#### Step 4: 
+
+#### Step 5: Setup a git hook to trigger a jenkins build by setting a post receive hook
+- On the Jenkins server, run the following commands to set up post-receive hooks for checkbox and itrust2
+
+
+For Checkbox:
 ```bash
-ansible-playbook /ansible-srv/build_itrust.yml -i /ansible-srv/inventory
+mkdir -p latest_checkbox/production.git/
+git init --bare latest_checkbox/production.git/
+echo "ansible-playbook build_job_checkbox.yml" > latest_checkbox/production.git/hooks/post-receive
+chmod 755 latest_checkbox/production.git/hooks/post-receive
 ```
-- Setup a git hook to trigger a jenkins build by setting a post receive hook  
- 
- 
+For iTrust2:
+```bash
+mkdir -p latest_itrust/production.git/
+git init --bare latest_itrust/production.git/
+echo "ansible-playbook build_job_checkbox.yml" > latest_checkbox/production.git/hooks/post-receive
+chmod 755 latest_checkbox/production.git/hooks/post-receive
+```
+
+
  
  
  
