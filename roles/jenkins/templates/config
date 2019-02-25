@@ -1,5 +1,5 @@
 host github.ncsu.edu
 HostName github.ncsu.edu
-IdentityFile /home/vagrant/.ssh/git_rsa
-User alagava
+IdentityFile /home/ubuntu/.ssh/git_rsa
+#User alagava
 StrictHostKeyChecking no
