@@ -69,6 +69,10 @@ def create_security_group(ec2,name):
 		{'IpProtocol': 'tcp',
 			'FromPort': 22,
 			'ToPort': 22,
+			'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+		{'IpProtocol': 'tcp',
+			'FromPort': 9000,
+			'ToPort': 9000,
 			'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
 	])
 	return group_id
