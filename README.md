@@ -19,7 +19,7 @@
 
 - Use `git clone https://github.ncsu.edu/alagava/Project-DevOps.git` to clone our project repository.
  
-- Go to the proper directory using `cd Project-DevOps/ansible-srv` and run `baker bake` to create the ansible controller VM (ansible-srv).
+- Go to the proper directory using `cd Project-DevOps/servers/ansible-srv` and run `baker bake` to create the ansible controller VM (ansible-srv).
 - SSH into ansible-srv:
  ```
  baker ssh
