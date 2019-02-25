@@ -134,13 +134,13 @@ git push prod master
  Run the unit and integrations tests using maven.
  
  ```
- cd iTrust2-v4
- Obtain a local clone of the application using git clone https://github.ncsu.edu/sbajaj/iTrust2-v4
-
-Make a simple change like touch demo.txt inside the repo and push it upstream.
-
-You should be able to observe the build getting executed on the Jenkins UI.
+ cd iTrust2-v4/iTrust2
+ mvn -f pom-data.xml process-test-classes
+ mvn jetty:run
+ mvn clean test verify checkstyle:checkstyle
+ ```
  
+
  ### Screencast link
  
  https://youtu.be/BuKzrGF1z0Q
