@@ -1,4 +1,12 @@
-# DevOps Project - Team 12
+# DevOps Project 
+
+## Team 12
+#### Members:
++ Ruturaj Vyawahare (rvyawah@ncsu.edu)
++ Avanti Santosh Lagavankar (alagava@ncsu.edu)
++ Sagar Bajaj (sbajaj@ncsu.edu)
++ CHaran Ram Vellaiyur Chellaram (cvellai@ncsu.edu)
+
 ## Milestone 1
  This milestone demonstrates the use of the Continuos Intergration tool Jenkins and ansible to automate the setup of a simple pipeline for the following two applications:
 - A nodejs web application checkbox.io
@@ -144,10 +152,10 @@ git push prod master
  
 ### Contributions
 
-  **Ruturaj (rvyawah)** - Automating the creation and provisioning of AWS EC2 instances for the jenkins server and testing iTrust builds  
-  **Avanti (alagava)** - Installing and configuring Jenkins, Checkbox.io and all its dependencies using ansible                          
-  **Charan (cvellai)** - Automating build job creation on jenkins, MongoDB configuration and testing of Checkbox.io using mocha test     scripts       
-  **Sagar (sbajaj)** - Setting up iTrust application and its dependencies including MySQL database in an automated manner
+  **Ruturaj** - Automating the creation and provisioning of AWS EC2 instances for the jenkins server and testing iTrust builds  
+  **Avanti** - Installing and configuring Jenkins, Checkbox.io and all its dependencies using ansible                          
+  **Charan** - Automating build job creation on jenkins, MongoDB configuration and testing of Checkbox.io using mocha test scripts       
+  **Sagar** - Setting up iTrust application and its dependencies including MySQL database in an automated manner
  
 
  ### Screencast link
