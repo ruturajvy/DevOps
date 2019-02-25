@@ -80,7 +80,7 @@ Create a bare repository production.git for both the applications and add a post
 
 - On the Jenkins server, run the following commands to set up post-receive hooks on a localfor checkbox and itrust2
 
-For Checkbox:
+For Checkbox.io:
 ```bash
 mkdir -p latest_checkbox/production.git/
 git init --bare latest_checkbox/production.git/
@@ -96,23 +96,38 @@ chmod 755 latest_itrust/production.git/hooks/post-receive
 ```
 
 Setup the local copy of the applications on the jenkins server and add the bare repositories as a remote.
-Push some code changes to the bare repository to trigger the jenkin build.
 
-  
- ### Checkbox.io
- 
- Obtain a local clone of the application using `git clone https://github.com/cvellai/checkbox.io.git`
+For Checkbox.io:
+```
+git clone https://github.com/cvellai/checkbox.io.git
+cd checkbox.io
+git remote add prod <your path>/latest_checkbox/production.git
+```
+For iTrust2:
+```
+git clone https://github.ncsu.edu/sbajaj/iTrust2-v4
+cd iTrust2-v4
+git remote add prod <your path>/latest_itrust/production.git
+```
 
- Make a simple change like `touch demo.txt` inside the repo and push it upstream.
- 
- You should be able to observe the build getting executed on the Jenkins UI.
- 
- After the build is done, go to `server-side/site/` inside the local checkbox repo.
- 
- Run `npm test`. 
- 
- ### iTrust
- 
+Push some code changes to the bare repository to trigger the jenkin builds.
+For both:
+```
+touch hello.txt
+git add .
+git status
+git commit -m "new changes"
+git push prod master
+```
+#### Step 5: Running test scripts after build  
+ For Checkbox.io:
+ Run npm test to execute the mocha test script.
+ ```
+ cd checkbox.io/server-side/site
+ npm test
+ ```
+ For iTrust2:
+ Run the maven 
  Obtain a local clone of the application using git clone https://github.ncsu.edu/sbajaj/iTrust2-v4
 
 Make a simple change like touch demo.txt inside the repo and push it upstream.
