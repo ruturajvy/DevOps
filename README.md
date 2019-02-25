@@ -18,7 +18,9 @@
  ```
 And do the following:
 
- #### AWS credential configuration 
+
+
+#### AWS credential configuration 
  You need to set up your AWS security credentials before you are able
  to connect to AWS. You can do this by creating a file named "credentials" at ~/.aws/ 
  and saving the following lines in the file:
@@ -32,6 +34,9 @@ And do the following:
     [default]
     region=<your default region>
     output=<your desired output format>
+
+
+
 #### Generate SSH key pair to enable GitHub passwordless authentication 
 Generate a SSH key pair with the following command
 ```
@@ -42,17 +47,14 @@ Copy the contents of the public key file `~/.ssh/git-key.pub` and add it to your
 ### Instructions
 #### Step 1: Provisioning a remote VM to run the Jenkins build server and to host checkbox and iTrust2 applications.
 
-
- 
-
-
 - Run the `provision_ec2.yml` to create an AWS instance to be run as the remote Jenkins build server. This script will also setup the private key file with restricted permissions and populate the inventory file. This inventory file contains the public IP address of the Jenkins build server and path to the private key file. 
 
 ```bash
 ansible-playbook /ansible-srv/provision_ec2.yml -i 'localhost'
 ```
-#### Step 2: Setup Jenkins on the remote VM
-- Run the `jenkins_init.yml` playbook to install Jenkins on the remote VM
+#### Step 2: Setup Jenkins on the remote VM(jenkins-srv)
+
+- Run the `jenkins_init.yml` playbook to install and configure Jenkins on the remote VM.
 ```bash
 ansible-playbook /ansible-srv/jenkins.yml -i /ansible-srv/inventory
 ```
@@ -60,21 +62,21 @@ ansible-playbook /ansible-srv/jenkins.yml -i /ansible-srv/inventory
 #### Step 3: Create jobs for building checkbox and itrust2 using jenkins job builder
 
 - Run the `create_jobs.yml` playbook to setup build jobs for checkbox.io and itrust2 on the jenkins server using jenkins-job-builder.
-```bash
+
+```
+bash
 ansible-playbook /ansible-srv/create_jobs.yml -i /ansible-srv/inventory
 ```
-- Run the `build_jobs.yml` playbook to copy the `build_checkbox.yml` and `build_itrust.yml` playbooks that perform the actual build of the checkbox.io and itrust2 applications by running the `build_checkbox.yml` and `build_itrust.yml` playbooks respectively
+- Run the `build_jobs.yml` playbook to copy the `build_checkbox.yml` and `build_itrust.yml` playbooks that perform the actual build of the checkbox.io and itrust2 applications onto the jenkins server.
 
-```bash
+```
+bash
 ansible-playbook /ansible-srv/build_jobs.yml -i /ansible-srv/inventory
 ```
-#### Step 4: 
 
+#### Step 4: Setup a git hook to trigger a jenkins build by setting a post receive hook
 
-
-#### Step 5: Setup a git hook to trigger a jenkins build by setting a post receive hook
 - On the Jenkins server, run the following commands to set up post-receive hooks for checkbox and itrust2
-
 
 For Checkbox:
 ```bash
