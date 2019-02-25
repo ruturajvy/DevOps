@@ -129,7 +129,7 @@ print(vm_ip)
 f = open("inventory", "r")
 contents = f.readlines()
 f.close()
-contents[1] = vm_ip +' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/Ansible/DevOps-Key.pem\n'
+contents[1] = vm_ip +' ansible_ssh_user=ubuntu ansible_ssh_private_key_file=/ansible-srv/DevOps-Key.pem\n'
 f = open("inventory", "w")
 contents = "".join(contents)
 f.write(contents)
