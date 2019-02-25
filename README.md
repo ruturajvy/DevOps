@@ -7,8 +7,7 @@
  The provisioning and configuring of the jenkins server is done on a remote VM using ansible. The build jobs for both applications are setup automatically on jenkins using the jenkins-job-builder and the build jobs are executed using git hooks that are triggered whenever a push is made to their respective repositories. A simple test script is also run in the end after each build to verify whether the proper functionality of the applications remian intact.
  
  ### Instructions
- prerequuisites
- AWS account
+ pre-requisites: AWS account
  
 - Use `git clone https://github.ncsu.edu/alagava/Project-DevOps.git` to clone our project repository.
  
