@@ -44,22 +44,23 @@ ansible-playbook /ansible-srv/provision_ec2.yml -i 'localhost'
 #### Step 2: Setup Jenkins on the remote VM
 - Run the `jenkins_init.yml` playbook to install Jenkins on the remote VM
 ```bash
-ansible-playbook /ansible-srv/jenkins_init.yml -i /ansible-srv/inventory
+ansible-playbook /ansible-srv/jenkins.yml -i /ansible-srv/inventory
 ```
 
 #### Step 3: Create jobs for building checkbox and itrust2 using jenkins job builder
 
-- Run the `create_jobs.yml` playbook to create jobs for build checkbox.io and itrust2 using jenkins-job-builder and copy them to the build server.
+- Run the `create_jobs.yml` playbook to setup build jobs for checkbox.io and itrust2 on the jenkins server using jenkins-job-builder.
 ```bash
 ansible-playbook /ansible-srv/create_jobs.yml -i /ansible-srv/inventory
 ```
-- For the first time build the checkbox.io and itrust2 applications by running the `build_checkbox.yml` and `build_itrust.yml` playbooks respectively
+- Run the `build_jobs.yml` playbook to copy the `build_checkbox.yml` and `build_itrust.yml` playbooks that perform the actual build of the checkbox.io and itrust2 applications by running the `build_checkbox.yml` and `build_itrust.yml` playbooks respectively
 
 ```bash
 ansible-playbook /ansible-srv/build_jobs.yml -i /ansible-srv/inventory
 ```
-
 #### Step 4: 
+
+
 
 #### Step 5: Setup a git hook to trigger a jenkins build by setting a post receive hook
 - On the Jenkins server, run the following commands to set up post-receive hooks for checkbox and itrust2
