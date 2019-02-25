@@ -143,10 +143,13 @@ git push prod master
  
 ### Contributions
 
-   Ruturaj - Automating the creation and provisioning of AWS EC2 instances for the jenkins server and testing iTrust builds
-   Avanti - Installing and configuring Jenkins, Checkbox.io and all its dependencies using ansible 
-   Charan - Automating build job creation on jenkins, MongoDB configuration and testing of Checkbox.io using mocha test scripts
-   Sagar - Setting up iTrust application and its dependencies including MySQL database in an automated manner
+   **Ruturaj** - Automating the creation and provisioning of AWS EC2 instances for the jenkins server and testing iTrust builds
+  
+  **Avanti** - Installing and configuring Jenkins, Checkbox.io and all its dependencies using ansible 
+  
+  **Charan** - Automating build job creation on jenkins, MongoDB configuration and testing of Checkbox.io using mocha test scripts
+  
+  **Sagar** - Setting up iTrust application and its dependencies including MySQL database in an automated manner
  
 
  ### Screencast link
