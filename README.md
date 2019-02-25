@@ -121,13 +121,20 @@ git push prod master
 ```
 #### Step 5: Running test scripts after build  
  For Checkbox.io:
+ 
  Run npm test to execute the mocha test script.
+ 
  ```
  cd checkbox.io/server-side/site
  npm test
  ```
+ 
  For iTrust2:
- Run the maven 
+ 
+ Run the unit and integrations tests using maven.
+ 
+ ```
+ cd iTrust2-v4
  Obtain a local clone of the application using git clone https://github.ncsu.edu/sbajaj/iTrust2-v4
 
 Make a simple change like touch demo.txt inside the repo and push it upstream.
