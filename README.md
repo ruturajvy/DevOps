@@ -155,13 +155,17 @@ git push prod master
   **Ruturaj** - Automating the creation and provisioning of AWS EC2 instances for the jenkins server and testing iTrust builds  
   **Avanti** - Installing and configuring Jenkins, Checkbox.io and all its dependencies using ansible                          
   **Charan** - Automating build job creation on jenkins, MongoDB configuration and testing of Checkbox.io using mocha test scripts       
-  **Sagar** - Setting up iTrust application and its dependencies including MySQL database in an automated manner and helped with installing and configuring Jenkins.
+  
+  **Sagar** - Setting up iTrust application and its dependencies including MySQL database in an automated manner and helped with installing and configuring Jenkins
  
-### Experience Gained
+### Experience Gained and Challenges faced
 
 1. Setting up Jenkins server automatically ran into some issues including password issues, after enabling the groovy script it was completed.
 2. iTrust gave address already in use because the server it runs on also uses the port 8080, which is the same as Jenkins. Running jenkins on another port also took a lot of time because it would fail the groovy scripts and those had to be changed as well.
 3. Git keys were set up the forked iTrust and checkbox repos along with their config files in order to clone them.
+4. iTrust ran into a lot of memory issues and wont run completely on a 1GB aws instance and a larger memory system had to be provisioned.
+5. Using older version of Ansible and NodeJs caused problems in running mocha test scripts and jenkins script modules in Ansible and hence,  had to be updated.
+
 
 
  ### Screencast link
