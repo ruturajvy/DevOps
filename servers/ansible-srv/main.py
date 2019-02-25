@@ -122,7 +122,7 @@ def terminate_instances(ec2,instance_list):
 
 key_name = generate_keypair(ec2, 'DevOps-Key')
 group_id = create_security_group(ec2, 'DevOps-Group')
-vm_id = create_instance(ec2,resource, listimages(ec2), 't2.micro', key_name, group_id)
+vm_id = create_instance(ec2,resource, listimages(ec2), 'm3.large', key_name, group_id)
 time.sleep(2)
 vm_ip = get_instance_info(ec2,vm_id)
 print(vm_ip)
