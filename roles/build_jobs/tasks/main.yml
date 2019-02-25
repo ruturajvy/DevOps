@@ -24,16 +24,16 @@
   copy:
     src: "templates/build_job_checkbox.yml"
     dest: /home/ubuntu/
-  become: false
+  become: true
 
 - name: Copy iTrust build script to jenkins server
   copy:
     src: "templates/build_job_itrust.yml"
     dest: /home/ubuntu/
-  become: false
+  become: true
 
 - name: Copy checkbox build playbook to jenkins server
   copy:
     src: "templates/checkbox_build.yml"
     dest: /home/ubuntu/
-  become: false
+  become: true
