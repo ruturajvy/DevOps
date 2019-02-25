@@ -1,4 +1,4 @@
-# DevOps Project 
+# DevOps Project - Team 12
 ## Milestone 1
  This milestone demonstrates the use of the Continuos Intergration tool Jenkins and ansible to automate the setup of a simple pipeline for the following two applications:
 - A nodejs web application checkbox.io
