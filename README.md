@@ -5,7 +5,7 @@
 + Ruturaj Vyawahare (rvyawah@ncsu.edu)
 + Avanti Santosh Lagavankar (alagava@ncsu.edu)
 + Sagar Bajaj (sbajaj@ncsu.edu)
-+ CHaran Ram Vellaiyur Chellaram (cvellai@ncsu.edu)
++ Charan Ram Vellaiyur Chellaram (cvellai@ncsu.edu)
 
 ## Milestone 1
  This milestone demonstrates the use of the Continuos Intergration tool Jenkins and ansible to automate the setup of a simple pipeline for the following two applications:
