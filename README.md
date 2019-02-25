@@ -169,5 +169,5 @@ git push prod master
 
  ### Screencast link
  
- https://youtu.be/BuKzrGF1z0Q
+ The video link for the screencast can be found [here](https://youtu.be/gundMHfOBXw)
  
