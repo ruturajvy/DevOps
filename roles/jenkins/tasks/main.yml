@@ -177,7 +177,7 @@
 
   - name: Copy jenkins_jobs.ini file to jenkins server
     template:
-     src: /home/vagrant/Project-DevOps/roles/jenkins/templates/jenkins_jobs.ini
+     src: /ansible-srv/roles/jenkins/templates/jenkins_jobs.ini
      dest: /home/ubuntu/jenkins_jobs.ini
     become: true 
 
