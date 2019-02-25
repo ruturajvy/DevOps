@@ -140,7 +140,7 @@ git push prod master
  mvn jetty:run
  mvn clean test verify checkstyle:checkstyle
  ```
- NOTE: The tests will be run as a part of the build job itself.
+ NOTE: The tests will be run as a part of the build job itself (ONLY for iTrust2).
  
 ### Contributions
 
