@@ -75,7 +75,7 @@ ansible-playbook /ansible-srv/build_jobs.yml -i /ansible-srv/inventory
 ```
 
 #### Step 4: Setup a git hook to trigger a jenkins build by setting a post receive hook
-
+To trigger the 
 
 - On the Jenkins server, run the following commands to set up post-receive hooks on a localfor checkbox and itrust2
 
