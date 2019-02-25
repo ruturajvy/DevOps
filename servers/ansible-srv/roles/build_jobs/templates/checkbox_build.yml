@@ -74,8 +74,7 @@
   - name: Install latest package
     become: true
     apt:
-      #name: ['mongodb','python-pip','python3-pip','python3-setuptools']
-      name: ['python-pip','python3-pip','python3-setuptools']
+      name: ['mongodb','python-pip','python3-pip','python3-setuptools']
       state: latest
       update_cache: yes
       force: yes
