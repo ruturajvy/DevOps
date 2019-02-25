@@ -112,6 +112,11 @@ chmod 755 latest_itrust/production.git/hooks/post-receive
  
  ### iTrust
  
+ Obtain a local clone of the application using git clone https://github.ncsu.edu/sbajaj/iTrust2-v4
+
+Make a simple change like touch demo.txt inside the repo and push it upstream.
+
+You should be able to observe the build getting executed on the Jenkins UI.
  
  ### Screencast link
  
