@@ -26,6 +26,12 @@
    dest: /home/ubuntu/jobs/{{iTrust_job}}.yml
   become: yes
 
+- name: Copy iTrust Fuzzer jenkins job  script
+  template:
+    src: "itrust_fuzzing.yml"
+    dest: /home/ubuntu/jobs/itrust_fuzzing.yml
+  become: yes
+
 - name: read admin pwd | Jenkins
   shell: cat /var/lib/jenkins/secrets/initialAdminPassword
   register: adminpwd

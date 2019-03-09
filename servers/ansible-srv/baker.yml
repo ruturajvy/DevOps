@@ -1,5 +1,5 @@
-name: cm-server
+name: ansible-server
 vm:
-  ip: 192.168.77.10
+  ip: 192.168.77.20
 tools:
   - ansible

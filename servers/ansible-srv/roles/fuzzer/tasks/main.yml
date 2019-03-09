@@ -1,0 +1,14 @@
+---
+
+- name: DELETE iTrustClone dirctory if it exists
+  file: 
+    path: "{{itrust_directory}}"
+    state: absent
+
+- name: CREATE iTrustClone directory
+  file: 
+    path: "{{itrust_directory}}"
+    state: directory
+    mode: 0775
+
+
