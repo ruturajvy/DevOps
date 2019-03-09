@@ -11,4 +11,32 @@
     state: directory
     mode: 0775
 
+- name: Git Clone
+  git:
+    repo: 'git@github.ncsu.edu:sbajaj/iTrust2-v4.git'
+    dest: "{{itrust_directory}}"
+
+- name: Add Pre-Push Hook
+  template:
+    src: "pre-push-hook"
+    dest: "{{itrust_directory}}/.git/hooks/pre-push"
+    mode: 0767
+  
+
+- name: Add Fuzzer.js file
+  copy:
+    src: "fuzzer.js"
+    dest: "{{itrust_directory}}/fuzzer.js"
+    mode: 0666
+
+- name: adding package.json file for fuzzer.js
+  copy: 
+    src: "package.json"
+    dest: "{{itrust_directory}}/package.json"
+
+
+- name: Git add and checkout to master
+  shell: "cd {{itrust_directory}} && npm install && git checkout master && touch fuzzer.js && git add . && git commit -m \"Commiting to master by developer\" && git push"
+
+
 
