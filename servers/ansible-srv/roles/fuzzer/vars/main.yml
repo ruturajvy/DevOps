@@ -1,6 +1,6 @@
 ---
 
 itrust_fuzzer_job_name: iTrust_fuzzer
-itrust_directory: /home/vagrant/iTrustFuzzer
+itrust_directory: ~/iTrustFuzzer
 JENKINS_URL: 34.203.204.90
 

@@ -24,13 +24,13 @@
   
 
 - name: Add Fuzzer.js file
-  copy:
+  template:
     src: "fuzzer.js"
     dest: "{{itrust_directory}}/fuzzer.js"
     mode: 0666
 
 - name: adding package.json file for fuzzer.js
-  copy: 
+  template: 
     src: "package.json"
     dest: "{{itrust_directory}}/package.json"
 
