@@ -1,5 +1,6 @@
 ---
 
 itrust_fuzzer_job_name: iTrust_fuzzer
-itrust_directory: /home/ubuntu/iTrustFuzzer
+itrust_directory: /home/vagrant/iTrustFuzzer
+JENKINS_URL: 34.203.204.90
 
