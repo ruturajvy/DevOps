@@ -11,43 +11,48 @@
     update_cache: yes
     force: yes
 
-- name: DELETE iTrustClone dirctory if it exists
+- name: Deleting the existing repo directory
   file: 
     path: "{{itrust_directory}}"
     state: absent
 
-- name: CREATE iTrustClone directory
+- name: Creating a local directory for itrust
   file: 
     path: "{{itrust_directory}}"
     state: directory
     mode: 0775
 
-- name: Git Clone
+- name: Cloning the lastest itrust repo
   git:
     repo: 'git@github.ncsu.edu:sbajaj/iTrust2-v4.git'
     dest: "{{itrust_directory}}"
 
-- name: Add Pre-Push Hook
+- name: Adding pre-push hook
   template:
     src: "pre-push-hook"
     dest: "{{itrust_directory}}/.git/hooks/pre-push"
     mode: 0767
   
 
-- name: Add Fuzzer.js file
+- name: Adding the fuzzer.js file
   template:
     src: "fuzzer.js"
     dest: "{{itrust_directory}}/fuzzer.js"
     mode: 0666
 
-- name: adding package.json file for fuzzer.js
+- name: Adding package.json file for fuzzer.js
   template: 
     src: "package.json"
     dest: "{{itrust_directory}}/package.json"
-
+    
+- name: Setting up git config on localhost
+  shell: "git config --global user.name \"Fuzzer\" && git config --global user.email \"Fuzzer\"" 
 
 - name: Git add and checkout to master
-  shell: "cd {{itrust_directory}} && npm install && git checkout master && touch fuzzer.js && git add . && git commit -m \"Commiting to master by developer\" && git push"
+  shell: "cd {{itrust_directory}} && npm install && git checkout master && touch fuzzer.js && git add . && git commit -m \"Starting the fuzzing task\""
+
+- name: Pushing to itrust to trigger fuzzing for 100 iterations
+  shell: "cd {{itrust_directory}} && git push -u origin master 
 
 
 

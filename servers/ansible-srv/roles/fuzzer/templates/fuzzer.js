@@ -129,7 +129,7 @@ function mutationTesting(path)
 
 const fuzzing = (iterations) => {
     // Get path to java files to be modified 
-    let filepaths = getFilePaths('iTrust2-v4/iTrust2/src/main/java/edu/ncsu/csc/itrust2/');
+    let filepaths = getFilePaths('iTrust2/src/main/java/edu/ncsu/csc/itrust2/');
     for (var i = 0; i < iterations; i++) {
         // Revert to original branch state
         // Perform code changes using fuzzer for multiple iterations
